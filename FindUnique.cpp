@@ -1,20 +1,14 @@
 #include<iostream>
 using namespace std;
-int FindUnique(int arr[],int size){
+int FindUniqueNumber(int arr[],int size){
+    int res=0;
     for(int i=0;i<size;i++){
-        int count=0;
-        for(int j=0;j<size;j++){
-            if(arr[i]==arr[j]){
-                count++;
-            }
-        }
-        if(count==1){
-            return arr[i];
-        }
-    }
+    res=res^arr[i];}
+    return res;
 }
+
 int main()
 {
-    int arr[]={2,5,6,5,1,2,1,2};
-    cout<<FindUnique(arr,8);
+    int arr[]={6,1,6,3,4,3,1};
+    cout<<FindUniqueNumber(arr,7)<<endl;
 }
