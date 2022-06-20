@@ -1,43 +1,46 @@
 #include<iostream>
 using namespace std;
-long DecToBin(int num){
-    long res=0;
-    int pow=1;
-    while(num>0){
-        long  d=num%2;
-         res+=d*pow;
-        pow*=10;
-        num=num/2;
-
+void printName(int start,int end){
+    if(start>end){
+        return;
     }
-    return res;
+    cout<<"Ravi Kumar Gupta"<<endl;
+    printName(start+1,end);
 }
-int BinToDec(int num){
-    int res=0;
-    int pow=1;
-    while(num>0){
-        int d=num%10;
-         res+=d*pow;
-        pow*=2;
-        num=num/10;
-
-    }
-    return res;
+void print1toN(int start,int end){
+    if(start>end)return;
+    cout<<start<<endl;
+    print1toN(start+1,end);
 }
-long Bin(int num){
-    int count=0;
-    int ans=0;
-    while(num>0&&count!=4){
-         ans=num%10;
-        count++;
-        num/=10;
-    }
-    return DecToBin(ans);
+void printNto1(int start,int end){
+   if(start<1)return;
+   cout<<start<<endl;
+   printNto1(start-1,end);
+
+}
+void print1toNbacktrack(int start,int end){
+    if(start<1)return;
+    print1toNbacktrack(start-1,end);
+    cout<<start<<endl;
+}
+void printNto1backtrack(int start,int end){
+    if(start>end)return;
+    printNto1backtrack(start+1,end);
+    cout<<start<<endl;
 }
 int main()
 {
-    int num;
-    cin>>num;
-    long ans=Bin(num);
-    cout<<ans<<endl;
+    int N;
+    cin>>N;
+    cout<<"Print Name 1toN"<<endl;
+    printName(1,N);cout<<endl;
+    cout<<"Print 1toN"<<endl;
+    print1toN(1,N);cout<<endl;
+    cout<<"Print Nto1"<<endl;
+    printNto1(N,N);cout<<endl;
+    cout<<"Print 1toN backtrack"<<endl;
+
+    print1toNbacktrack(N,N);cout<<endl;
+    cout<<"Print Nto1 Backtrack"<<endl;
+    printNto1backtrack(1,N);cout<<endl;
 }
