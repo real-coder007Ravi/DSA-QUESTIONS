@@ -39,7 +39,7 @@ class Fraction{
 
      }
 
-};``````````````````
+};
 int main()
 {
     Fraction f1(10,2);
