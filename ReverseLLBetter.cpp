@@ -1,13 +1,19 @@
 #include<iostream>
 using namespace std;
+//Time Complexity-O(n)
 class Node{
     public:
-    int data;
-    Node* next;
-    Node(int data){
+     int data;
+     Node* next;
+     Node(int data){
         this->data=data;
         this->next=NULL;
-    }
+     }
+};
+class Pair{
+    public:
+     Node* head;
+     Node* tail;
 };
 Node* TakeInput(){
     int data;
@@ -25,7 +31,6 @@ Node* TakeInput(){
             tail=tail->next;
         }
         cin>>data;
-
     }
     return head;
 }
@@ -36,20 +41,31 @@ void print(Node* head){
         temp=temp->next;
     }
 }
-Node* ReverseLl(Node* head){
+
+Pair ReverseLL(Node* head){
     if(head==NULL||head->next==NULL){
-        return head;
+        Pair ans;
+        ans.head=head;
+        ans.tail=head;
+        return ans;
     }
-    Node* smallAns=ReverseLl(head->next);
-    Node* tail=head->next;
-    tail->next=head;
+    Pair smallans=ReverseLL(head->next);
+    smallans.tail->next=head;
     head->next=NULL;
-    return smallAns;
+    Pair ans;
+    ans.head=smallans.head;
+    ans.tail=head;
+    return ans;
+
+}
+Node* Reverse(Node* head){
+    return ReverseLL(head).head;
 }
 int main()
 {
     Node* head=TakeInput();
     print(head);
-    head=ReverseLl(head);
+    cout<<endl;
+    head=Reverse(head);
     print(head);
 }

@@ -49,7 +49,7 @@ Node* ReverseLl(Node* head){
 int main()
 {
     Node* head=TakeInput();
-    print(head);
+   
     head=ReverseLl(head);
     print(head);
 }

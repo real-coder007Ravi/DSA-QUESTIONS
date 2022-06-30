@@ -9,13 +9,13 @@ class Node{
         this->next=NULL;
     }
 };
-Node* TakeInput(){
+Node * TakeInput(){
     int data;
     cin>>data;
-    Node* head=NULL;
+    Node *head=NULL;
     Node* tail=NULL;
     while(data!=-1){
-        Node* newNode=new Node(data);
+        Node * newNode=new Node(data);
         if(head==NULL){
             head=newNode;
             tail=newNode;
@@ -25,31 +25,37 @@ Node* TakeInput(){
             tail=tail->next;
         }
         cin>>data;
-
     }
     return head;
 }
-void print(Node* head){
+void print(Node *head){
     Node* temp=head;
+    while (temp!=NULL)
+    {
+       cout<<temp->data<<" ";
+       temp=temp->next;
+    }
+    
+}
+int FindANode(Node *head,int data){
+    Node* temp=head;
+    int count=0;
     while(temp!=NULL){
-        cout<<temp->data<<" ";
+        if(temp->data==data){
+            return count;
+
+        }
+        count++;
         temp=temp->next;
     }
-}
-Node* ReverseLl(Node* head){
-    if(head==NULL||head->next==NULL){
-        return head;
-    }
-    Node* smallAns=ReverseLl(head->next);
-    Node* tail=head->next;
-    tail->next=head;
-    head->next=NULL;
-    return smallAns;
+    return -1;
 }
 int main()
 {
     Node* head=TakeInput();
     print(head);
-    head=ReverseLl(head);
-    print(head);
+    int data;
+    cin>>data;
+    int ans=FindANode(head,data);
+    cout<<ans<<endl;
 }

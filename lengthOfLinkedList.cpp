@@ -3,7 +3,7 @@ using namespace std;
 class Node{
     public:
     int data;
-    Node* next;
+    Node*next;
     Node(int data){
         this->data=data;
         this->next=NULL;
@@ -19,37 +19,38 @@ Node* TakeInput(){
         if(head==NULL){
             head=newNode;
             tail=newNode;
-        }
-        else{
+        }else{
             tail->next=newNode;
             tail=tail->next;
         }
         cin>>data;
 
+        
     }
     return head;
 }
-void print(Node* head){
-    Node* temp=head;
+void print(Node *head){
+    Node *temp=head;
     while(temp!=NULL){
         cout<<temp->data<<" ";
         temp=temp->next;
     }
 }
-Node* ReverseLl(Node* head){
-    if(head==NULL||head->next==NULL){
-        return head;
+int LengthRecursive(Node *head){
+    if(head==NULL){
+        return 0;
     }
-    Node* smallAns=ReverseLl(head->next);
-    Node* tail=head->next;
-    tail->next=head;
-    head->next=NULL;
-    return smallAns;
+    if(head->next==NULL){
+        return 1;
+    }
+    
+    int ans=LengthRecursive(head->next);
+    return 1+ans;
 }
 int main()
 {
-    Node* head=TakeInput();
+    Node *head=TakeInput();
     print(head);
-    head=ReverseLl(head);
-    print(head);
+    int ans=LengthRecursive(head);
+    cout<<ans<<endl;
 }

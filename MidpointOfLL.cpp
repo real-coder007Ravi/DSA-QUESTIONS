@@ -2,12 +2,12 @@
 using namespace std;
 class Node{
     public:
-    int data;
-    Node* next;
-    Node(int data){
+     int data;
+     Node* next;
+     Node(int data){
         this->data=data;
         this->next=NULL;
-    }
+     }
 };
 Node* TakeInput(){
     int data;
@@ -25,31 +25,31 @@ Node* TakeInput(){
             tail=tail->next;
         }
         cin>>data;
-
     }
     return head;
 }
 void print(Node* head){
     Node* temp=head;
-    while(temp!=NULL){
+    while (temp!=NULL)
+    {
         cout<<temp->data<<" ";
         temp=temp->next;
     }
+    
 }
-Node* ReverseLl(Node* head){
-    if(head==NULL||head->next==NULL){
-        return head;
+Node* MidpointOfLl(Node* head){
+    if(head==NULL||head->next==NULL)return head;
+    Node* slow=head;
+    Node* fast=head->next;
+    while(fast!=NULL&&fast->next!=NULL){
+        slow=slow->next;
+        fast=fast->next->next;
     }
-    Node* smallAns=ReverseLl(head->next);
-    Node* tail=head->next;
-    tail->next=head;
-    head->next=NULL;
-    return smallAns;
+    return slow;
 }
 int main()
 {
-    Node* head=TakeInput();
-    print(head);
-    head=ReverseLl(head);
-    print(head);
+    Node* head=TakeInput(); 
+    Node* mid=MidpointOfLl(head);
+    cout<<mid->data<<endl;
 }

@@ -9,7 +9,7 @@ class Node{
         this->next=NULL;
     }
 };
-Node* TakeInput(){
+Node* takeInput(){
     int data;
     cin>>data;
     Node* head=NULL;
@@ -25,31 +25,34 @@ Node* TakeInput(){
             tail=tail->next;
         }
         cin>>data;
-
     }
     return head;
 }
 void print(Node* head){
     Node* temp=head;
-    while(temp!=NULL){
+    while (temp!=NULL)
+    {
         cout<<temp->data<<" ";
         temp=temp->next;
     }
+    
 }
-Node* ReverseLl(Node* head){
-    if(head==NULL||head->next==NULL){
-        return head;
+Node* Reverse_Iterative(Node* head){
+    Node* prev=NULL;
+    Node* curr=head;
+    Node* next=NULL;
+    while (curr!=NULL){
+        next=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=next;
     }
-    Node* smallAns=ReverseLl(head->next);
-    Node* tail=head->next;
-    tail->next=head;
-    head->next=NULL;
-    return smallAns;
+    return prev;
+
 }
 int main()
 {
-    Node* head=TakeInput();
-    print(head);
-    head=ReverseLl(head);
+    Node* head=takeInput();
+    head=Reverse_Iterative(head);
     print(head);
 }
