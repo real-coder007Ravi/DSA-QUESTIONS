@@ -16,34 +16,36 @@ class BinaryTreeNode{
         delete right;
      }
 };
-void print(BinaryTreeNode<int>* root){
+BinaryTreeNode<int>* TakeInput(){
+     int Data;
+     cout<<"Enter Data"<<endl;
+     cin>>Data;
+     if(Data==-1)return NULL;
+     BinaryTreeNode<int>* root=new BinaryTreeNode<int>(Data);
+     BinaryTreeNode<int>* left=TakeInput();
+     BinaryTreeNode<int>* right=TakeInput();
+     root->left=left;
+     root->right=right;
+     return root;
+}
+void printRecursive(BinaryTreeNode<int>* root){
     if(root==NULL)return;
     cout<<root->data<<":";
     if(root->left!=NULL){
-        cout<<"L"<<root->left->data;    }
+         cout<<"L"<<root->left->data;
+    }
     if(root->right!=NULL){
         cout<<"R"<<root->right->data;
+
     }
     cout<<endl;
-    print(root->left);
-    print(root->right);
-}
-BinaryTreeNode<int>* TakeInput(){
-    int RootData;
-    cout<<"Enter RootData"<<endl;
-    cin>>RootData;
-   
-    if(RootData==-1)return NULL;
-    BinaryTreeNode<int>*root=new BinaryTreeNode<int>(RootData);
-    BinaryTreeNode<int>*left=TakeInput();
-    BinaryTreeNode<int>* right=TakeInput();
-    root->left=left;
-    root->right=right;
-    return root;
+    printRecursive(root->left);
+    printRecursive(root->right);
+
 
 }
 int main()
 {
     BinaryTreeNode<int>* root=TakeInput();
-    print(root);
+    printRecursive(root);
 }
