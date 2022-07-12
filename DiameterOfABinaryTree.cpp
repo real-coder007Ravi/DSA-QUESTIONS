@@ -1,4 +1,3 @@
-
 #include <iostream>
 using namespace std;
 #include <queue>
@@ -80,12 +79,44 @@ void printLevelWise(BinaryTreeNode<int> *root)
         cout << endl;
     }
 }
-int SumOfNodes(BinaryTreeNode<int>* root){
+int Height(BinaryTreeNode<int>* root){
     if(root==NULL)return 0;
-    return root->data+SumOfNodes(root->left)+SumOfNodes(root->right);
+    return 1+max(Height(root->left),Height(root->right));
+}
+int Diameter(BinaryTreeNode<int>* root){
+    if(root==NULL)return 0;
+    int option1=Height(root->left)+Height(root->right);
+    int option2=Diameter(root->left);
+    int option3=Diameter(root->right);
+    return max(option1,max(option2,option3));
+
+}
+pair<int,int>HeightDiameter(BinaryTreeNode<int>* root){
+    if(root==NULL){
+        pair<int,int>ans;
+        ans.first=0;
+        ans.second=0;
+        return ans;
+    }
+    pair<int,int>LeftAns=HeightDiameter(root->left);
+    pair<int,int>RightAns=HeightDiameter(root->right);
+    int LeftHeight=LeftAns.first;
+    int LeftDiameter=LeftAns.second;
+    int RightHeight=RightAns.first;
+    int RightDiameter=RightAns.second;
+    int height=1+max(LeftHeight,RightHeight);
+    int diameter=max(LeftHeight+RightHeight,max(LeftDiameter,RightDiameter));
+    pair<int,int>p;
+    p.first=height;
+    p.second=diameter;
+    return p;
+
 }
 int main(){
-    BinaryTreeNode<int>* root= TakeInput();
+    BinaryTreeNode<int>* root=TakeInput();
     printLevelWise(root);
-    cout<<"Sum Of Nodes: "<<SumOfNodes(root)<<endl;
+    cout<<Diameter(root)<<endl;
+    pair<int,int>ans=HeightDiameter(root);
+    cout<<"Height : "<<ans.first<<endl;
+    cout<<"Diameter : "<<ans.second<<endl;
 }

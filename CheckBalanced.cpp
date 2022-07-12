@@ -1,4 +1,3 @@
-
 #include <iostream>
 using namespace std;
 #include <queue>
@@ -80,12 +79,58 @@ void printLevelWise(BinaryTreeNode<int> *root)
         cout << endl;
     }
 }
-int SumOfNodes(BinaryTreeNode<int>* root){
-    if(root==NULL)return 0;
-    return root->data+SumOfNodes(root->left)+SumOfNodes(root->right);
+pair<bool,int> isBalanced2(BinaryTreeNode<int>* root){
+    if(root==NULL){
+        pair<bool,int>ans;
+        ans.first=true;
+        ans.second=0;
+        return ans;
+    }
+    pair<bool,int>leftAns=isBalanced2(root->left);
+    pair<bool,int>RightAns=isBalanced2(root->right);
+    pair<bool,int>ans1;
+    ans1.first=(abs(leftAns.first-RightAns.first)<=1)&&leftAns.first&&RightAns.first;
+    ans1.second=max(leftAns.second,RightAns.second)+1;
+    return ans1;
+
+}
+bool isBalanced(BinaryTreeNode<int>* root){
+    return isBalanced2(root).first;
+}
+void printLevelOrder(BinaryTreeNode<int>* root){
+    if(root==NULL){
+        return;
+    }
+    queue<BinaryTreeNode<int>*>pendingnodes;
+    pendingnodes.push(root);
+    pendingnodes.push(NULL);
+    while(pendingnodes.size()!=0){
+        BinaryTreeNode<int>* front=pendingnodes.front();
+        pendingnodes.pop();
+        if(front==NULL){
+            if(pendingnodes.empty()){
+                break;
+            }
+            cout<<"\n";
+            pendingnodes.push(NULL);
+        }
+        else{
+            cout<<front->data<<" ";
+            if(front->left!=NULL){
+                pendingnodes.push(front->left);
+            }
+             if(front->right!=NULL){
+                pendingnodes.push(front->right);
+            }
+
+        }
+    }
 }
 int main(){
-    BinaryTreeNode<int>* root= TakeInput();
+    BinaryTreeNode<int>* root=TakeInput();
     printLevelWise(root);
-    cout<<"Sum Of Nodes: "<<SumOfNodes(root)<<endl;
+    cout<<isBalanced(root)<<endl;
+    printLevelOrder(root);
+    cout<<endl;
+    
 }

@@ -1,7 +1,7 @@
-
 #include <iostream>
 using namespace std;
 #include <queue>
+#include<stack>
 template <typename T>
 class BinaryTreeNode
 {
@@ -80,12 +80,44 @@ void printLevelWise(BinaryTreeNode<int> *root)
         cout << endl;
     }
 }
-int SumOfNodes(BinaryTreeNode<int>* root){
-    if(root==NULL)return 0;
-    return root->data+SumOfNodes(root->left)+SumOfNodes(root->right);
-}
-int main(){
-    BinaryTreeNode<int>* root= TakeInput();
-    printLevelWise(root);
-    cout<<"Sum Of Nodes: "<<SumOfNodes(root)<<endl;
-}
+void ZigZagOrder(BinaryTreeNode<int>* root){
+    if(root==NULL)return;
+    stack<BinaryTreeNode<int>*>s1,s2;
+    s1.push(root);
+    while(!s1.empty()||!s2.empty()){
+        while(!s1.empty()){
+            BinaryTreeNode<int>* front=s1.top();
+            s1.pop();
+            cout<<front->data<<" ";
+            if(front->left!=NULL){
+                s2.push(front->left);
+            }
+            if(front->right!=NULL){
+                s2.push(front->right);
+            }
+
+        }
+        cout<<endl;
+        while (!s2.empty())
+        {
+            BinaryTreeNode<int>* front=s2.top();
+            s2.pop();
+            cout<<front->data<<" ";
+            if(front->left!=NULL){
+                s1.push(front->left);
+            }
+            if(front->right!=NULL){
+                s1.push(front->right);
+            }
+            
+        }
+        cout<<endl;
+        
+    }}
+    int main(){
+        BinaryTreeNode<int>* root=TakeInput();
+    
+        ZigZagOrder(root);
+    }
+
+

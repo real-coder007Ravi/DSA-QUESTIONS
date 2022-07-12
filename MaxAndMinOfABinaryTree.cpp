@@ -1,4 +1,3 @@
-
 #include <iostream>
 using namespace std;
 #include <queue>
@@ -80,12 +79,36 @@ void printLevelWise(BinaryTreeNode<int> *root)
         cout << endl;
     }
 }
-int SumOfNodes(BinaryTreeNode<int>* root){
-    if(root==NULL)return 0;
-    return root->data+SumOfNodes(root->left)+SumOfNodes(root->right);
+pair<int, int> MaxMin(BinaryTreeNode<int> *root)
+{
+    if (root->left == NULL&& root->right==NULL)
+    {
+        pair<int, int> ans;
+        ans.first = root->data;
+        ans.second = root->data;
+        return ans;
+    }
+    pair<int,int>ans;
+    ans.first=root->data;
+    ans.second=root->data;
+    if(root->left!=NULL){
+        pair<int,int>LeftAns=MaxMin(root->left);
+        ans.first=min(ans.first,LeftAns.first);
+        ans.second=max(ans.second,LeftAns.second);
+    }
+      if(root->right!=NULL){
+        pair<int,int>RightAns=MaxMin(root->right);
+        ans.first=min(ans.first,RightAns.first);
+        ans.second=max(ans.second,RightAns.second);
+    }
+ 
+    return ans;
 }
-int main(){
-    BinaryTreeNode<int>* root= TakeInput();
+int main()
+{
+    BinaryTreeNode<int> *root = TakeInput();
     printLevelWise(root);
-    cout<<"Sum Of Nodes: "<<SumOfNodes(root)<<endl;
+    pair<int, int> p=MaxMin(root);
+    cout << "Maximum Of A Binary Tree is: " << p.first << endl;
+    cout << "Minimum oF A Binary Tree is: " << p.second << endl;
 }

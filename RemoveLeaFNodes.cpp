@@ -1,4 +1,3 @@
-
 #include <iostream>
 using namespace std;
 #include <queue>
@@ -80,12 +79,24 @@ void printLevelWise(BinaryTreeNode<int> *root)
         cout << endl;
     }
 }
-int SumOfNodes(BinaryTreeNode<int>* root){
-    if(root==NULL)return 0;
-    return root->data+SumOfNodes(root->left)+SumOfNodes(root->right);
+BinaryTreeNode<int>* RemoveLeafNodes(BinaryTreeNode<int>* root){
+    if(root->left==NULL && root->right==NULL){
+        delete root;
+        return NULL;
+    }
+    if(root->left!=NULL){
+        root->left=RemoveLeafNodes(root->left);
+
+    }
+    if(root->right!=NULL){
+        root->right=RemoveLeafNodes(root->right);
+    }
+    return root;
 }
 int main(){
-    BinaryTreeNode<int>* root= TakeInput();
+    BinaryTreeNode<int>* root=TakeInput();
     printLevelWise(root);
-    cout<<"Sum Of Nodes: "<<SumOfNodes(root)<<endl;
+    cout<<endl;
+   BinaryTreeNode<int>* root1= RemoveLeafNodes(root);
+    printLevelWise(root1);
 }

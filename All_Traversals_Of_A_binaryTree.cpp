@@ -1,4 +1,3 @@
-
 #include <iostream>
 using namespace std;
 #include <queue>
@@ -80,12 +79,32 @@ void printLevelWise(BinaryTreeNode<int> *root)
         cout << endl;
     }
 }
-int SumOfNodes(BinaryTreeNode<int>* root){
-    if(root==NULL)return 0;
-    return root->data+SumOfNodes(root->left)+SumOfNodes(root->right);
+void printInOrder(BinaryTreeNode<int>* root){
+    if(root==NULL)return;
+    
+    printInOrder(root->left);
+    cout<<root->data<<" ";
+    printInOrder(root->right);
 }
-int main(){
-    BinaryTreeNode<int>* root= TakeInput();
-    printLevelWise(root);
-    cout<<"Sum Of Nodes: "<<SumOfNodes(root)<<endl;
+void printPreOrder(BinaryTreeNode<int>* root){
+    if(root==NULL)return;
+    
+    cout<<root->data<<" ";
+    printPreOrder(root->left);
+    printPreOrder(root->right);
+
+}
+void PostOder(BinaryTreeNode<int>* root){
+    if(root==NULL)return;
+    PostOder(root->left);
+    PostOder(root->right);
+    cout<<root->data<<" ";
+}
+
+int main()
+{
+    BinaryTreeNode<int> *root = TakeInput();
+    PostOder(root);
+   
+   
 }

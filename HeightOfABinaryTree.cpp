@@ -66,16 +66,30 @@ void printLevelWise(BinaryTreeNode<int>* root){
         cout<<endl;
     }
 }
-bool isPresent(BinaryTreeNode<int>* root,int x){
-    if(root==NULL)return false;
-    if(root->data==x)return true;
-    
-   
-    return isPresent(root->left,x)||isPresent(root->right,x);
+int Height(BinaryTreeNode<int>* root){
+    if(root==NULL)return 0;
+    int LeftHeight=Height(root->left);
+    int RightHeight=Height(root->right);
+    if(LeftHeight>RightHeight){
+        return 1+LeftHeight;
+    }
+    return 1+RightHeight;
 }
-int main(){
+void MirrorOfABT(BinaryTreeNode<int>* root){
+    if(root==NULL)return;
+    BinaryTreeNode<int>*temp=root->right;
+    root->right=root->left;
+    root->left=temp;
+    MirrorOfABT(root->left);
+    MirrorOfABT(root->right);
+}
+int main()
+{
     BinaryTreeNode<int>* root=TakeInputlevelwise();
     printLevelWise(root);
-    bool ans=isPresent(root,4);
+   
+    MirrorOfABT(root);
+    printLevelWise(root);
+     int ans=Height(root);
     cout<<ans<<endl;
 }

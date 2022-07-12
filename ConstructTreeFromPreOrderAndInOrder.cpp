@@ -1,4 +1,3 @@
-
 #include <iostream>
 using namespace std;
 #include <queue>
@@ -80,12 +79,59 @@ void printLevelWise(BinaryTreeNode<int> *root)
         cout << endl;
     }
 }
-int SumOfNodes(BinaryTreeNode<int>* root){
-    if(root==NULL)return 0;
-    return root->data+SumOfNodes(root->left)+SumOfNodes(root->right);
+BinaryTreeNode<int>* helper(int *inorder,int *preorder,int preS,int preE,int inS,int inE){
+    if(preS>preE)return NULL;
+    int rooData=preorder[preS];
+    BinaryTreeNode<int>* root=new BinaryTreeNode<int>(rooData);
+    int length=0;
+    for(int i=inS;inorder[i]!=root->data;i++){
+        length++;
+    }
+    int LeftPreS=preS+1;
+    int LeftPreE=preS+length;
+    int RightPreS=LeftPreE+1;
+    int RightPreE=preE;
+    int LeftInS=inS;
+    int LeftInE=inS+length-1;
+    int RightInS=LeftInE+2;
+    int RightInE=inE;
+    root->left=helper(inorder,preorder,LeftPreS,LeftPreE,LeftInS,LeftInE);
+    root->right=helper(inorder,preorder,RightPreS,RightPreE,RightInS,RightInE);
+    return root;
+
+}
+BinaryTreeNode<int>* helper2(int *postorder,int *inorder,int postS,int postE,int inS,int inE){
+    if(postS>postE)return NULL;
+    int rootData=postorder[postE];
+    BinaryTreeNode<int>* root=new BinaryTreeNode<int>(rootData);
+    int length=0;
+    for(int i=inS;inorder[i]!=root->data;i++){
+        length++;
+    }
+    int LeftPostS=postS;
+    int LeftPostE=postS+length-1;
+    int LeftInS=inS;
+    int LeftInE=inS+length-1;
+     int RightPostS=LeftPostE+1;
+    int RightPostE=postE-1;
+    int RightInS=LeftInE+2;
+    int RightInE=inE;
+   
+    root->left=helper2(postorder,inorder,LeftPostS,LeftPostE,LeftInS,LeftInE);
+    root->right=helper2(postorder,inorder,RightPostS,RightPostE,RightInS,RightInE);
+    return root;
+
+}
+BinaryTreeNode<int>* buildTree(int *inorder,int *preorder,int size){
+    return helper(inorder,preorder,0,size-1,0,size-1);
+}
+BinaryTreeNode<int>* buildTree2(int *postorder,int *inorder,int size){
+    return helper2(postorder,inorder,0,size-1,0,size-1);
 }
 int main(){
-    BinaryTreeNode<int>* root= TakeInput();
+    int inorder[]={4,2,5,1,6,3,7};
+    int postorder[]={4,5,2,6,7,3,1};
+    int preorder[]={1,2,4,5,3,6,7};
+    BinaryTreeNode<int>* root=buildTree2(postorder,inorder,7);
     printLevelWise(root);
-    cout<<"Sum Of Nodes: "<<SumOfNodes(root)<<endl;
 }
