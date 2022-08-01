@@ -1,15 +1,16 @@
 #include <iostream>
 using namespace std;
-//Dp Approach
-int  StepsToStaircase_3(int n){
-    int *dp=new int[n+1];
-    dp[0]=0;
-    dp[1]=1;
-    dp[2]=2;
-    dp[3]=4;
-    for(int i=4;i<=n;i++){
-        dp[i]=dp[i-3]+dp[i-2]+dp[i-1];
-
+// Dp Approach
+int StepsToStaircase_3(int n)
+{
+    int *dp = new int[n + 1];
+    dp[0] = 0;
+    dp[1] = 1;
+    dp[2] = 2;
+    dp[3] = 4;
+    for (int i = 4; i <= n; i++)
+    {
+        dp[i] = dp[i - 3] + dp[i - 2] + dp[i - 1];
     }
     return dp[n];
 }
@@ -64,5 +65,5 @@ int main()
     cin >> n;
     cout << StepsToStaircase(n) << endl;
     cout << StepsToStaircase_2(n) << endl;
-    cout<< StepsToStaircase_3(n)<<endl;
+    cout << StepsToStaircase_3(n) << endl;
 }
